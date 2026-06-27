@@ -14,12 +14,12 @@ of being maintained by hand.
 
 ## Why this exists
 
-GRC artifacts — System Security Plans, POA&Ms, assessment reports — are
+GRC artifacts: System Security Plans, POA&Ms, assessment reports - are
 normally kept as separate documents and updated by hand. They drift. A control
 gets remediated, the POA&M gets updated, the compliance report doesn't, and the
 SSP says something different again.
 
-This repo demonstrates a different approach I think in: **artifact as code.**
+This repo demonstrates a different approach I call: **artifact as code.**
 One authoritative file describes every control's status. Every downstream
 artifact is *generated* from it, so they are consistent by construction.
 
@@ -36,7 +36,7 @@ monitoring — applied with automation.
 ## What this demonstrates
 
 | RMF / GRC competency | Where to see it |
-|---|---|
+
 | Security categorization (FIPS 199 / 800-60) | `docs/system-security-plan.md` |
 | SSP development & maintenance | `docs/system-security-plan.md` |
 | NIST 800-53 Rev 5 control implementation | `controls/control-baseline.yaml` |
