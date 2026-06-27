@@ -1,0 +1,291 @@
+# ============================================================================
+#  CONTROL BASELINE — SINGLE SOURCE OF TRUTH
+# ============================================================================
+#  System:        Sentinel Access Portal (SAP)
+#  Framework:     NIST SP 800-53 Rev 5
+#  Baseline:      Moderate (FIPS 199: Moderate / Moderate / Moderate)
+#
+#  This YAML is the authoritative record of control implementation status.
+#  All downstream artifacts (POA&M, compliance report, dashboard) are
+#  GENERATED from this file by scripts/generate_artifacts.py. Edit controls
+#  here, never in the generated outputs — that is the whole point.
+#
+#  *** SYNTHETIC / TRAINING DATA. Fictional system. No real-world
+#      configuration, boundary, or environment is represented. ***
+# ============================================================================
+
+system:
+  name: Sentinel Access Portal
+  acronym: SAP
+  description: >
+    A fictional internal web application that brokers access requests and
+    approvals for enterprise resources. Used here purely to demonstrate RMF
+    authorization-artifact management. It is not a real system.
+  categorization:                 # FIPS 199 / NIST SP 800-60
+    confidentiality: Moderate
+    integrity: Moderate
+    availability: Moderate
+    overall: Moderate
+  authorization_boundary: >
+    Application tier, supporting database, and identity integration. Hosted in
+    a generic cloud environment. Boundary intentionally abstract for a public
+    portfolio artifact.
+  rmf_step: "Step 5 — Authorize (pre-ATO continuous monitoring)"
+
+# Status vocabulary (NIST/eMASS-aligned):
+#   Implemented            - control is in place and assessed as effective
+#   Partially Implemented  - some elements in place; gaps remain  -> POA&M
+#   Planned                - approved approach, not yet implemented -> POA&M
+#   Not Implemented        - no implementation                     -> POA&M
+#
+# risk: Low | Moderate | High  (residual risk of the open weakness)
+
+controls:
+  - id: AC-2
+    family: Access Control
+    title: Account Management
+    status: Implemented
+    responsible_role: IAM Administrator
+    last_assessed: 2026-05-12
+    narrative: >
+      Account lifecycle (create, modify, disable, remove) is managed through
+      the enterprise identity provider with documented approval workflow.
+      Inactive accounts are disabled automatically after 35 days.
+
+  - id: AC-3
+    family: Access Control
+    title: Access Enforcement
+    status: Implemented
+    responsible_role: IAM Administrator
+    last_assessed: 2026-05-12
+    narrative: >
+      Role-based access control enforces approved authorizations. Access
+      decisions are mediated by the application authorization layer.
+
+  - id: AC-17
+    family: Access Control
+    title: Remote Access
+    status: Implemented
+    responsible_role: System Administrator
+    last_assessed: 2026-05-10
+    narrative: >
+      Usage restrictions, configuration requirements, and connection
+      requirements are documented for each type of remote access, and each
+      type is authorized prior to allowing connections. Remote access is
+      permitted only via the managed VPN and is logged.
+
+  - id: AU-2
+    family: Audit and Accountability
+    title: Event Logging
+    status: Implemented
+    responsible_role: ISSO
+    last_assessed: 2026-05-09
+    narrative: >
+      The set of event types selected for logging (authentication,
+      authorization changes, and administrative privilege usage) is defined,
+      documented with a rationale supporting after-the-fact investigation, and
+      reviewed and updated annually. Generation of the records is addressed
+      under AU-12.
+
+  - id: AU-6
+    family: Audit and Accountability
+    title: Audit Record Review, Analysis, and Reporting
+    status: Partially Implemented
+    responsible_role: ISSO
+    last_assessed: 2026-05-09
+    weakness: >
+      Log review is performed manually on an ad hoc basis. No automated
+      correlation or scheduled review cadence is documented.
+    remediation: >
+      Forward audit records to the enterprise SIEM, define correlation rules
+      for privileged-account anomalies, and establish a weekly review SOP.
+    scheduled_completion: 2026-09-30
+    risk: Moderate
+
+  - id: AU-12
+    family: Audit and Accountability
+    title: Audit Record Generation
+    status: Implemented
+    responsible_role: System Administrator
+    last_assessed: 2026-05-09
+    narrative: >
+      In-boundary components provide audit record generation capability for
+      the event types defined under AU-2, with record content per AU-3.
+      Generation is enabled across all components within the boundary.
+
+  - id: CA-7
+    family: Assessment, Authorization, and Monitoring
+    title: Continuous Monitoring
+    status: Planned
+    responsible_role: ISSM
+    last_assessed: 2026-05-01
+    weakness: >
+      A continuous monitoring strategy exists in draft but metrics, reporting
+      frequency, and responsible parties are not yet finalized or approved.
+    remediation: >
+      Finalize the ConMon strategy, define security metrics and reporting
+      frequency, and obtain ISSM/AO approval.
+    scheduled_completion: 2026-10-31
+    risk: Moderate
+
+  - id: CM-2
+    family: Configuration Management
+    title: Baseline Configuration
+    status: Implemented
+    responsible_role: System Administrator
+    last_assessed: 2026-04-28
+    narrative: >
+      Documented baseline configurations are maintained under version control
+      and updated as part of the change management process.
+
+  - id: CM-6
+    family: Configuration Management
+    title: Configuration Settings
+    status: Partially Implemented
+    responsible_role: System Administrator
+    last_assessed: 2026-04-28
+    weakness: >
+      DISA STIG settings are applied to servers but a documented record of
+      approved deviations (exceptions) is incomplete.
+    remediation: >
+      Complete the STIG checklist review, document and obtain approval for all
+      deviations, and store results with the authorization package.
+    scheduled_completion: 2026-08-31
+    risk: Low
+
+  - id: CM-7
+    family: Configuration Management
+    title: Least Functionality
+    status: Not Implemented
+    responsible_role: System Administrator
+    last_assessed: 2026-04-28
+    weakness: >
+      No formal review of installed services/ports/protocols has been
+      performed; unnecessary functionality may be enabled.
+    remediation: >
+      Inventory services/ports/protocols, disable those not required for
+      operations, and document the approved functionality list.
+    scheduled_completion: 2026-08-15
+    risk: Moderate
+
+  - id: IA-2
+    family: Identification and Authentication
+    title: Identification and Authentication (Organizational Users)
+    status: Implemented
+    responsible_role: IAM Administrator
+    last_assessed: 2026-05-12
+    narrative: >
+      All organizational users are uniquely identified and authenticated.
+      Multifactor authentication is enforced for all interactive logons.
+
+  - id: IA-5
+    family: Identification and Authentication
+    title: Authenticator Management
+    status: Implemented
+    responsible_role: IAM Administrator
+    last_assessed: 2026-05-12
+    narrative: >
+      Authenticator content, complexity, and lifecycle are managed via policy.
+      Default authenticators are changed prior to deployment.
+
+  - id: IR-4
+    family: Incident Response
+    title: Incident Handling
+    status: Implemented
+    responsible_role: ISSO
+    last_assessed: 2026-04-20
+    narrative: >
+      An incident handling capability covering preparation, detection and
+      analysis, containment, eradication, and recovery is implemented
+      consistent with the incident response plan, coordinated with
+      contingency planning, with lessons learned incorporated into procedures.
+
+  - id: RA-5
+    family: Risk Assessment
+    title: Vulnerability Monitoring and Scanning
+    status: Partially Implemented
+    responsible_role: ISSO
+    last_assessed: 2026-05-05
+    weakness: >
+      Authenticated scans run monthly, but remediation timelines by severity
+      are not consistently enforced and trending is not reported.
+    remediation: >
+      Enforce remediation SLAs by CVSS severity, automate scan scheduling, and
+      report vulnerability trend metrics to the ISSM.
+    scheduled_completion: 2026-09-15
+    risk: Moderate
+
+  - id: SC-7
+    family: System and Communications Protection
+    title: Boundary Protection
+    status: Partially Implemented
+    responsible_role: System Administrator
+    last_assessed: 2026-05-02
+    weakness: >
+      Boundary firewalls are deployed, but the documented inventory of
+      managed interfaces and deny-by-default ruleset review is outdated.
+    remediation: >
+      Update the managed-interface inventory, validate deny-by-default
+      posture, and schedule semiannual ruleset reviews.
+    scheduled_completion: 2026-09-30
+    risk: Moderate
+
+  - id: SC-8
+    family: System and Communications Protection
+    title: Transmission Confidentiality and Integrity
+    status: Implemented
+    responsible_role: System Administrator
+    last_assessed: 2026-05-02
+    narrative: >
+      All data in transit is protected using TLS 1.2+ with approved cipher
+      suites. Plaintext protocols are disabled.
+
+  - id: SC-13
+    family: System and Communications Protection
+    title: Cryptographic Protection
+    status: Implemented
+    responsible_role: System Administrator
+    last_assessed: 2026-05-02
+    narrative: >
+      Cryptographic modules in use are FIPS 140-validated and configured in
+      accordance with the system cryptographic policy.
+
+  - id: SC-28
+    family: System and Communications Protection
+    title: Protection of Information at Rest
+    status: Planned
+    responsible_role: System Administrator
+    last_assessed: 2026-05-02
+    weakness: >
+      Database-tier encryption at rest is approved but not yet enabled in the
+      target environment.
+    remediation: >
+      Enable transparent data encryption on the database tier and validate via
+      configuration evidence.
+    scheduled_completion: 2026-10-15
+    risk: Moderate
+
+  - id: SI-2
+    family: System and Information Integrity
+    title: Flaw Remediation
+    status: Implemented
+    responsible_role: System Administrator
+    last_assessed: 2026-05-05
+    narrative: >
+      Patches are tested and deployed on a defined monthly cycle; critical
+      patches are expedited. Remediation actions are tracked to closure.
+
+  - id: SI-4
+    family: System and Information Integrity
+    title: System Monitoring
+    status: Partially Implemented
+    responsible_role: ISSO
+    last_assessed: 2026-05-05
+    weakness: >
+      Host and network monitoring are deployed, but alerting thresholds and
+      response procedures for indicators of compromise are not fully defined.
+    remediation: >
+      Define alerting thresholds, document the monitoring response SOP, and
+      integrate alerts with the incident handling workflow.
+    scheduled_completion: 2026-09-30
+    risk: Moderate
